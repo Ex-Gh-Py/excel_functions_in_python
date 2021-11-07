@@ -1,0 +1,23 @@
+# import necessary libraries
+from openpyxl import load_workbook
+
+# open excel document
+workbook = load_workbook(filename="Example.xlsx")
+sheet = workbook.active
+
+# create empty list
+all_cell_values = []
+
+# iter through excel columns/ cells and add to all_cell_values[]
+for col in sheet.iter_cols():
+    for cell in col:
+        cell_value = cell.value
+        all_cell_values.append(cell_value)
+
+# array with all values
+print(all_cell_values)
+print(f"all cell values count = {len(all_cell_values)}")
+
+# sorted unique values
+print(list(set(all_cell_values)))
+print(f"unique cell value count = {len(set(all_cell_values))}")

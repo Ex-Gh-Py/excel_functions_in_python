@@ -1,0 +1,30 @@
+# import necessary libraries
+from openpyxl import load_workbook
+from collections import Counter
+
+# open excel document
+workbook = load_workbook(filename="Example.xlsx")
+sheet = workbook.active
+
+# create empty list for all cell values
+all_cell_values = []
+
+# iter through excel columns/ cells and add to all_cell_values[]
+for col in sheet.iter_cols():
+    for cell in col:
+        cell_value = cell.value
+        all_cell_values.append(cell_value)
+
+# create empty list for results
+new_values = []
+
+# using collections Counter you can get keys (unique values) and values (counts for unique values)
+for key, value in Counter(all_cell_values).items():
+    temp_val = f"{key} = {value}"
+    new_values.append(temp_val)
+
+# array with all values
+print(all_cell_values)
+
+# print result
+print(new_values)

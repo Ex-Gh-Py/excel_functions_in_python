@@ -1,0 +1,36 @@
+# import necessary libraries
+from openpyxl import load_workbook
+from openpyxl.utils import get_column_letter
+
+# open excel document
+workbook = load_workbook(filename="Example.xlsx")
+sheet = workbook.active
+
+# create empty list for all excel values
+all_values = []
+
+# append cell column, letter and value to all_values
+for col in sheet.iter_cols():
+    current_col_values = []
+    for cell in col:
+        cell_value = cell.value
+        if cell_value is None:
+            cell_value = ""
+        current_values = [get_column_letter(cell.column), cell.row, cell_value]
+        current_col_values.append(current_values)
+    all_values.append(current_col_values)
+
+# create empty array list same length as all values
+concatenate_values_raw = []
+[concatenate_values_raw.append([]) for _ in range(len(all_values[0]))]
+
+# append excel columns together (this creates arrays with each value in separate array)
+for col in all_values:
+    [concatenate_values_raw[i].append(str(col[i][2])) for i in range(len(col))]
+
+# use .join to join values into one string with space between values
+concatenate_values = []
+[concatenate_values.append(' '.join(new_values)) for new_values in concatenate_values_raw]
+
+print(f"concatenate_values = {concatenate_values}")
+
